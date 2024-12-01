@@ -23,6 +23,7 @@ public class RegistrationTests  extends BaseTest {
 
     @After
     public void tearDownRegistrationTest() {
+
         deleteUser();
     }
 
@@ -39,9 +40,11 @@ public class RegistrationTests  extends BaseTest {
 
         steps.enterText(objRegisterPage.registerPasswordField(), user.getPassword());
 
+
         steps.clickOnElement(objRegisterPage.registerButton());
 
         steps.waitElement(objLoginPage.logoItem());
+        getBearerToken(user);
 
         assertEquals( "Вход" , steps.getTextFromElement(objLoginPage.logoItem()));
 
@@ -61,6 +64,8 @@ public class RegistrationTests  extends BaseTest {
         steps.enterText(objRegisterPage.registerPasswordField(), "sssss");
 
         steps.clickOnElement(objRegisterPage.registerButton());
+
+        getBearerToken(user); //на всякий случай(Вдруг создастся)
 
         assertEquals( "Некорректный пароль" , steps.getTextFromElement(objRegisterPage.errorFieldRegistration()));
 

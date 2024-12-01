@@ -6,6 +6,7 @@ import io.restassured.response.ValidatableResponse;
 
 import static org.example.usergenerator.User.randomUser;
 import static org.example.usergenerator.UserClient.createUserClient;
+import static org.example.usergenerator.UserClient.loginClient;
 
 public class UserSteps {
 
@@ -30,6 +31,13 @@ public class UserSteps {
             UserClient.deleteClient();
         }
 
+    }
+
+    @Step("Получаем bearer токен юзера")
+    public static String getBearerToken(User user) {
+        UserCreds userCreds = UserCreds.from(user);
+        bearerToken = loginClient(userCreds).extract().path("accessToken");
+        return bearerToken;
     }
 
 }
